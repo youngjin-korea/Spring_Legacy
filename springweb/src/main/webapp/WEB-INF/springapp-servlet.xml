@@ -3,22 +3,35 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<!-- <bean id="helloController" class="kosa.controller.HelloController"></bean> -->
 
-	<context:component-scan base-package="kosa"></context:component-scan>
-
-	<bean id="helloService" class="kosa.service.HelloService"></bean>
-
-
-	
+	<context:component-scan base-package="kosa" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/"></property>
-		<property name="suffix" value=".jsp"></property>
+		<property name="prefix" value="/view/" />
+		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<!-- DB Setting -->
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory"
+			ref="mySqlSessionFactoryBean"></constructor-arg>
+	</bean>
 
+	<bean id="mySqlSessionFactoryBean"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource"></property>
+		<property name="configLocation"
+			value="/WEB-INF/mybatis-config.xml"></property>
+	</bean>
+
+	<bean id="myDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/oracle"></property>
+		<property name="resourceRef" value="true"></property>
+	</bean>
 </beans>

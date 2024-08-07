@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="kosa.model.Board" alias="Board" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="JNDI">
+				<!-- JNDI에 이미 data source 있음! 따라서 여기서는 불러다 쓰면됨 java:comp/env까지는 똑같고 그다음이 
+					내가 JNDI에 설정한 이름 -->
+				<property name="data_source"
+					value="java:comp/env/jdbc/oracle" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="kosa/mapper/Board.xml" />
+	</mappers>
+
+</configuration>
